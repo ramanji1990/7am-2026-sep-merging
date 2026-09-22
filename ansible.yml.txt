@@ -1,0 +1,17 @@
+---
+- name: Install Java on remote servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt repo and cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install OpenJDK 17 JDK
+      ansible.builtin.apt:
+        name: openjdk-17-jdk
+        state: present
+
+    - name: Verify Java version
+      ansible.builtin.command: java -version
+      register: java_version_output
